@@ -85,6 +85,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseCors(opt =>
+{
+    var frontendUrl = ConfigurationBinder.GetValue<string>(builder.Configuration, "frontend_url");
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 

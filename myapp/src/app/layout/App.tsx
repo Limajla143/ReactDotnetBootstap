@@ -4,15 +4,18 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 import Menu from './Menu';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import routes from './route.config';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { claim } from '../../features/auth/auth.model';
 import AuthenticationContext from '../../features/auth/AuthenticationContext';
+import { getClaims } from '../../features/auth/handleJWT';
 
 function App() {
 
-  const [claims, setClaims] = useState<claim[]>([
-    {name: 'email', value: 'felipe@hotmail.com'}
-  ]);
+  const [claims, setClaims] = useState<claim[]>([]);
+
+  useEffect(() => {
+    setClaims(getClaims())
+  }, [])
 
   function isAdmin() {
     return claims.findIndex(claim => claim.name === 'role' && claim.value === 'admin') > -1;

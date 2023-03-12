@@ -1,6 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import AuthenticationContext from "../../features/auth/AuthenticationContext";
+import Authorized from "../../features/auth/Authorized";
+import { logout } from "../../features/auth/handleJWT";
+import Button from "../forms/Button";
 
 export default function Menu () {
+
+    const {update, claims} = useContext(AuthenticationContext);
+
+    function getUserEmail() : string {
+        return claims.filter(x => x.name === "email")[0]?.value;
+    }
+
     return (
       <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -14,10 +26,17 @@ export default function Menu () {
                                 </NavLink>
                             </li>                          
                         </ul>
-                    </div>
-                    {/* <div className="d-flex">
+                        <div className="d-flex">
                                 <Authorized
-                                    authorized={<></>}
+                                    authorized={<>
+                                    <span className="nav-link">Hello, {getUserEmail()}</span>
+                                    <Button onClick={() => {
+                                         logout(); 
+                                         update([]) 
+                                    }}
+                                    className="nav-link btn btn-link"> Logout</Button>
+                                    </>
+                                    }
                                     noAuthorized={<>
                                         <Link to="/register"
                                         className="nav-link btn btn-link">Register</Link>
@@ -25,7 +44,9 @@ export default function Menu () {
                                         className="nav-link btn btn-link">Login</Link>
                                     </>}
                                 />
-                       </div>      */}
+                       </div>     
+                    </div>
+                        
             </div>
         </nav>
       </>
