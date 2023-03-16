@@ -5,69 +5,78 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly UserManager<User> userManager;
-        private readonly TokenService tokenService;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IConfiguration configuration;
 
-        public AccountController(UserManager<User> _userManager, TokenService _tokenService)
+        public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IConfiguration _configuration)
         {
             userManager = _userManager;
-            tokenService = _tokenService;
-        }
-
-        [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
-        {
-            var user = await userManager.FindByNameAsync(loginDto.Username);
-            if (user == null || !await userManager.CheckPasswordAsync(user, loginDto.Password))
-            {
-                return Unauthorized();
-            }
-            return new UserDto
-            {
-                Email = user.Email,
-                Token = await tokenService.GenerateToken(user)
-            };
+            signInManager = _signInManager;
+            configuration = _configuration;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register(RegisterDto registerDto)
+        public async Task<ActionResult<AuthenticationResponse>> Create([FromBody] UserCredentials userCredentials)
         {
-            var user = new User { UserName = registerDto.Username, Email = registerDto.Email };
+            var user = new IdentityUser { UserName = userCredentials.Email, Email = userCredentials.Email };
+            var result = await userManager.CreateAsync(user, userCredentials.Password);
 
-            var result = await userManager.CreateAsync(user, registerDto.Password);
-
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(error.Code, error.Description);
-                }
-
-                return ValidationProblem();
+                return BuildToken(userCredentials);
             }
-
-            await userManager.AddToRoleAsync(user, "Member");
-
-            return StatusCode(201);
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
 
-        [Authorize]
-        [HttpGet("currentUser")]
-        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] UserCredentials userCredentials)
         {
-            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var result = await signInManager.PasswordSignInAsync(userCredentials.Email, userCredentials.Password,
+                isPersistent: false, lockoutOnFailure: false);
 
-            return new UserDto
+            if (result.Succeeded)
             {
-                Email = user.Email,
-                Token = await tokenService.GenerateToken(user)
+                return BuildToken(userCredentials);
+            }
+            else
+            {
+                return BadRequest("Incorrect login");
+            }
+        }
+
+        private AuthenticationResponse BuildToken(UserCredentials userCredentials)
+        {
+            var claims = new List<Claim>()
+            {
+                new Claim("email", userCredentials.Email)
             };
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTSettings:TokenKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var expiration = DateTime.UtcNow.AddYears(1);
+
+            var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
+                expires: expiration, signingCredentials: creds);
+
+            return new AuthenticationResponse()
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = expiration
+            };
         }
     }
 }

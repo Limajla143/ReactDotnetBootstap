@@ -11,7 +11,6 @@ namespace API.Data
             {
                 var user = new User
                 {
-                    UserName = "bob",
                     Email = "bob@test.com"
                 };
 
@@ -20,7 +19,6 @@ namespace API.Data
 
                 var admin = new User
                 {
-                    UserName = "admin",
                     Email = "admin@test.com"
                 };
 

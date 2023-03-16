@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class StoreContext : IdentityDbContext<User, Role, int>
+    public class StoreContext : IdentityDbContext
     {
         public StoreContext(DbContextOptions options) : base(options)
         { }
