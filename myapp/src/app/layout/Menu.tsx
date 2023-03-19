@@ -17,6 +17,11 @@ export default function Menu() {
                 <NavLink className="navbar-brand" to="/"> React Movies </NavLink>
                     <div className="collapse navbar-collapse">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                                <NavLink className="nav-link" to="/types">
+                                    Types
+                                </NavLink>
+                            </li>      
                             <Authorized 
                                 role="admin"
                                 authorized={
