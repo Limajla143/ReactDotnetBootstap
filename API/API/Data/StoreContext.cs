@@ -10,6 +10,8 @@ namespace API.Data
         public StoreContext(DbContextOptions options) : base(options)
         { }
 
+        public DbSet<Types> Types { get; set; }
+        public DbSet<Brand> Brands { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
