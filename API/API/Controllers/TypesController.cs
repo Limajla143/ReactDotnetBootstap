@@ -38,7 +38,7 @@ namespace API.Controllers
 
             if (types == null)
             {
-                logger.LogWarning($"Genre with Id {id} no found");
+                logger.LogWarning($"Brand with Id {id} no found");
                 return NotFound();
             }
             return mapper.Map<TypesDto>(types);
