@@ -21,7 +21,12 @@ export default function Menu() {
                                 <NavLink className="nav-link" to="/types">
                                     Types
                                 </NavLink>
-                            </li>      
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/brand">
+                                    Brand
+                                </NavLink>
+                            </li>            
                             <Authorized 
                                 role="admin"
                                 authorized={

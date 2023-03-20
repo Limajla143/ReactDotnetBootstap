@@ -35,7 +35,7 @@ export default function EditTypes() {
             
     return (
         <>
-        <h3>Edit Genre</h3>
+        <h3>Edit Types</h3>
         <DisplayErrors errors={errors} />
         { types ? <TypesForm model={types} 
             onSubmit={async value => {
