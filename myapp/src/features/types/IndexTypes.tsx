@@ -24,7 +24,7 @@ export default function IndexTypes() {
             params: {page, recordsPerPage}
         })
             .then((response: AxiosResponse<typesDto[]>) => {
-               const totalAmountOfRecords = parseInt(response.headers['totalamountofrecords'], 10);
+               const totalAmountOfRecords = parseInt(response.headers['totalAmountOfRecords'], 10);
                setTotalAmountOfPages(Math.ceil(totalAmountOfRecords / recordsPerPage));
                setTypes(response.data);
             })
@@ -45,7 +45,7 @@ export default function IndexTypes() {
     return (
         <>
              <h3>Types</h3>
-            <Link className="btn btn-primary" to="/types/create">Create Types</Link>
+            <Link to="/types/create" className="btn btn-primary" >Create Types</Link>
 
             <RecordsPerPageSelect onChange={amountOfRecords => {
                 setPage(1);

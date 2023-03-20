@@ -7,12 +7,12 @@ import IndexTypes from "../../features/types/IndexTypes";
 import LandingPage from "./LandingPage";
 
 const routes = [
-    {path: '/products', component: ProductList, exact: true, isAdmin: true},
     {path: '/login', component: Login},
     {path: '/register', component: Register},
-    {path: '/types', component: IndexTypes},
+    {path: '/types', component: IndexTypes, exact: true},
     {path: '/types/create', component: CreateTypes},
     {path: '/types/edit/:id(\\d+)', component: EditTypes},
+    {path: '/products', component: ProductList, exact: true, isAdmin: true},
     {path: '/', component: LandingPage}   
 ]
 

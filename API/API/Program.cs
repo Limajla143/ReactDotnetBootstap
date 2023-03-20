@@ -72,7 +72,8 @@ app.UseRouting();
 app.UseCors(opt =>
 {
     var frontendUrl = ConfigurationBinder.GetValue<string>(builder.Configuration, "frontend_url");
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000")
+    .WithExposedHeaders(new string[] { "totalAmountOfRecords" });
 });
 
 
