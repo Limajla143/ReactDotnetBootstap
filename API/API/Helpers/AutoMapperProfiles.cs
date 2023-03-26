@@ -16,11 +16,13 @@ namespace MoviesAPI.Helpers
                 .ForMember(x => x.TypeName, y => y.MapFrom(z => z.Name));
 
 
-            CreateMap<BrandDto, Brand>()
-                .ForMember(x => x.BrandId, y => y.MapFrom(z => z.Id))
-                .ForMember(x => x.BrandName, y => y.MapFrom(z => z.Name)).ReverseMap();
+            CreateMap<BrandDto, Brand>();
             CreateMap<BrandCreationDto, Brand>()
                 .ForMember(x => x.BrandName, y => y.MapFrom(z => z.Name));
+
+            CreateMap<ProductDto, Product>();
+            CreateMap<ProductCreationDto, Product>();
+            CreateMap<ProductUpdateDto, Product>();
         }
     }
 }

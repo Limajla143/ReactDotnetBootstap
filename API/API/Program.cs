@@ -10,6 +10,7 @@ using MoviesAPI.ApiBehavior;
 using MoviesAPI.Helpers;
 using System.Text;
 using AutoMapper;
+using API.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<ImageService>();
 
 var app = builder.Build();
 
