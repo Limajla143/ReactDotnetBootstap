@@ -16,12 +16,12 @@ export default function IndexBrand() {
                     </thead>
                     <tbody>
                         {brands?.map(brand => 
-                            <tr key={brand.id}>
+                            <tr key={brand.brandId}>
                                 <td>
-                                    {buttons(`/brand/edit/${brand.id}`, brand.id)}  
+                                    {buttons(`/brand/edit/${brand.brandId}`, brand.brandId)}  
                                 </td>
                                 <td>
-                                    {brand.name}
+                                    {brand.brandName}
                                 </td>
                             </tr>
                         )}

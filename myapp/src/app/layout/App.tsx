@@ -29,9 +29,10 @@ function App() {
         <Switch>
           {routes.map(route => 
             <Route key={route.path} path={route.path} exact={route.exact}>
-              {route.isAdmin && !isAdmin() ? <>
+              {/* {route.isAdmin && !isAdmin() ? <>
                 You are not allowed to see this page
-              </> : <route.component /> }
+              </> : <route.component /> } */}
+              <route.component />
             </Route>
             )}
         </Switch>

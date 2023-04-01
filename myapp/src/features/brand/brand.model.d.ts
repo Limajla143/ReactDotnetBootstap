@@ -3,6 +3,6 @@ export interface brandCreationDTO {
 }
 
 export interface brandDto {
-    id: number;
-    name: string;
+    brandId: number;
+    brandName: string;
 }

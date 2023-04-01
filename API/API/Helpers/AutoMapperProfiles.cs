@@ -10,13 +10,15 @@ namespace MoviesAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<TypesDto, Types>()
-                .ForMember(x => x.TypeId, y => y.MapFrom(z => z.Id))
-                .ForMember(x => x.TypeName, y => y.MapFrom(z => z.Name)).ReverseMap();
+                .ForMember(x => x.TypeId, y => y.MapFrom(z => z.TypeId))
+                .ForMember(x => x.TypeName, y => y.MapFrom(z => z.TypeName)).ReverseMap();
             CreateMap<TypesCreationDto, Types>()
                 .ForMember(x => x.TypeName, y => y.MapFrom(z => z.Name));
 
 
-            CreateMap<BrandDto, Brand>();
+            CreateMap<BrandDto, Brand>()
+                .ForMember(x => x.BrandId, y => y.MapFrom(z => z.BrandId))
+                .ForMember(x => x.BrandName, y => y.MapFrom(z => z.BrandName)).ReverseMap();
             CreateMap<BrandCreationDto, Brand>()
                 .ForMember(x => x.BrandName, y => y.MapFrom(z => z.Name));
 

@@ -115,6 +115,30 @@ namespace API.Controllers
 
             return BadRequest(new ProblemDetails { Title = "Problem deleting product" });
         }
+
+        // For Selectors
+        [Route("SelectType")]
+        [HttpGet]
+        public async Task<ActionResult<List<TypesDto>>> GetTypesForProduct()
+        {
+            List<Types> types = await context.Types.ToListAsync();
+
+            if (types == null) return new List<TypesDto>();
+
+            return mapper.Map<List<TypesDto>>(types);
+        }
+
+        [Route("SelectBrand")]
+        [HttpGet]
+        public async Task<ActionResult<List<BrandDto>>> GetBrandsForProduct()
+        {
+            List<Brand> brands = await context.Brands.ToListAsync();
+
+            if (brands == null) return new List<BrandDto>();
+
+            return mapper.Map<List<BrandDto>>(brands);
+        }
+
     }
 }
 

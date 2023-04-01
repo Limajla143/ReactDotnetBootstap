@@ -3,6 +3,6 @@ export interface typesCreationDTO {
 }
 
 export interface typesDto {
-    id: number;
-    name: string;
+    typeId: number;
+    typeName: string;
 }

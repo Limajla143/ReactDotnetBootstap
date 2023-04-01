@@ -18,12 +18,12 @@ export default function IndexTypes() {
                 </thead>
                 <tbody>
                     {types?.map(type => 
-                        <tr key={type.id}>
+                        <tr key={type.typeId}>
                             <td>
-                                {buttons(`/types/edit/${type.id}`, type.id)}  
+                                {buttons(`/types/edit/${type.typeId}`, type.typeId)}  
                             </td>
                             <td>
-                                {type.name}
+                                {type.typeName}
                             </td>
                         </tr>
                     )}
