@@ -16,7 +16,7 @@ export default function LandingPage() {
 function loadData() {
   axios.get(urlProducts).then((response: AxiosResponse<productDto[]>) => {
     setProducts(response.data);
-})
+  })
 }
 
     return (

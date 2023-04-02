@@ -4,7 +4,6 @@ namespace API.Dtos
 {
     public class ProductUpdateDto
     {
-        public int ProductId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -22,6 +21,6 @@ namespace API.Dtos
         [Required]
         public int QuantityStock { get; set; }
 
-        public string PublicId { get; set; }
+        public string? PublicId { get; set; }
     }
 }

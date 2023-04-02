@@ -15,6 +15,6 @@ namespace API.Dtos
         public Types Type { get; set; }
         public int QuantityStock { get; set; }
 
-        public string PublicId { get; set; }
+        public string? PublicId { get; set; }
     }
 }

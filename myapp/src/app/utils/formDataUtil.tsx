@@ -1,6 +1,6 @@
 import { productCreationDto } from "../../features/products/product.model";
 
-export function convertProductToFormData(product: productCreationDto) {
+export function convertProductToFormData(product: productCreationDto) : FormData {
     const formData = new FormData();
 
     formData.append('name', product.name);
@@ -9,17 +9,19 @@ export function convertProductToFormData(product: productCreationDto) {
         formData.append('description', product.description);
     }
 
-    formData.append('price', JSON.stringify(product.price));
-    formData.append('brandId', JSON.stringify(product.brandId));
-    formData.append('typeId', JSON.stringify(product.typeId));
+    formData.append('price', product.price.toString());
+    formData.append('brandId', product.brandId.toString());
+    formData.append('typeId', product.typeId.toString());
 
     if(product.quantityStock) {
-        formData.append('quantityInStock', JSON.stringify(product.quantityStock));
+        formData.append('quantityStock', product.quantityStock.toString());
     }
 
     if(product.pictureUrl) {
-        formData.append('poster', JSON.stringify(product.pictureUrl));
+        formData.append('pictureUrl', product.pictureUrl);
     }
+
+    return formData;
 }
 
 function formatDate(date: Date) {

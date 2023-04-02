@@ -20,6 +20,6 @@ namespace API.Dtos
         [Required]
         public int QuantityStock { get; set; }
 
-        public string PublicId { get; set; }
+        public string? PublicId { get; set; }
     }
 }

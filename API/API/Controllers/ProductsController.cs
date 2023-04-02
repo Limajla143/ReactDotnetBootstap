@@ -59,18 +59,19 @@ namespace API.Controllers
                     });
 
                 product.PictureUrl = imageResult.SecureUrl.ToString();
+                product.PublicId = imageResult.PublicId;
             }
 
             context.Products.Add(product);
             var result = await context.SaveChangesAsync() > 0;
-            if (result) return CreatedAtRoute("GetProduct", new { Id = product.ProductId });
+            if (result) return NoContent();
             return BadRequest(new ProblemDetails { Title = "Problem adding product" });
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Product>> UpdateProduct([FromForm] ProductUpdateDto productDto)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<Product>> UpdateProduct(int id, [FromForm] ProductUpdateDto productDto)
         {
-            var product = await context.Products.FindAsync(productDto.ProductId);
+            var product = await context.Products.FindAsync(id);
 
             if (product == null) return NotFound();
 

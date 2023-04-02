@@ -6,7 +6,6 @@ import IndexBrand from "../../features/brand/IndexBrand";
 import CreateProduct from "../../features/products/CreateProduct";
 import EditProduct from "../../features/products/EditProduct";
 import ProductDetail from "../../features/products/ProductDetail";
-import ProductList from "../../features/products/ProductList";
 import CreateTypes from "../../features/types/CreateTypes";
 import EditTypes from "../../features/types/EditTypes";
 import IndexTypes from "../../features/types/IndexTypes";
@@ -21,7 +20,7 @@ const routes = [
     {path: '/brand', component: IndexBrand, exact: true},
     {path: '/brand/create', component: CreateBrand},
     {path: '/brand/edit/:id(\\d+)', component: EditBrand},
-    {path: '/products/create', component: CreateProduct, exact: true},
+    {path: '/products/create', component: CreateProduct},
     {path: '/products/edit/:id(\\d+)', component: EditProduct},
     {path: '/products/:id(\\d+)', component: ProductDetail},
     {path: '/', component: LandingPage}   

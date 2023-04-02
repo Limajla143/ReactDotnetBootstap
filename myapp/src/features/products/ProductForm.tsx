@@ -10,6 +10,7 @@ import axios, { AxiosResponse } from "axios";
 import { urlProducts } from "../../app/layout/endpoints";
 import Button from "../../app/forms/Button";
 import { Link } from "react-router-dom";
+import NumberField from "../../app/forms/NumberField";
 
 export default function ProductForm(props: productFormProps) {
 
@@ -49,7 +50,7 @@ export default function ProductForm(props: productFormProps) {
                 <Form>
                     <TextField displayName="Product Name" field="name"/>
                     <TextField displayName="Description" field="description"/>
-                    <TextField displayName="Price" field="price"/>
+                    <NumberField displayName="Price" field="price"/>
 
                     <Field as="select" name="brandId">
                         {brand?.map(x => (
@@ -63,9 +64,9 @@ export default function ProductForm(props: productFormProps) {
                         ))} 
                     </Field>
 
-                    <TextField displayName="Quantity Stock" field="quantityStock"/>
+                    <NumberField displayName="Quantity Stock" field="quantityStock"/>
 
-                    <ImageField displayName="Poster" field="poster" imageURL={props.model.pictureUrl}/>
+                    <ImageField displayName="Poster" field="pictureUrl" imageURL={props.model.pictureUrl}/>
 
                     <Button disabled={formikProps.isSubmitting} type='submit' >Save Changes</Button>
                     <Link className="btn btn-secondary" to="/">Cancel</Link>

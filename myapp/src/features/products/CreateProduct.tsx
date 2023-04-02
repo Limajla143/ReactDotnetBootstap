@@ -21,10 +21,9 @@ export default function CreateProduct() {
             const response = await axios({
                 method: 'post',
                 url: urlProducts,
-                data: JSON.stringify(formData),
+                data: formData,
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Accept: 'application/json',
+                    'Content-Type': 'multipart/form-data'
                 },
             })
             console.log(response.data);

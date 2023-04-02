@@ -41,8 +41,8 @@ export default function ProductDetails() {
                 </div>
             </div> : null}
 
-            <label>Brand</label> {product.brand.name}
-            <label>Types</label> {product.type.name}
+            <label>Brand</label> {product.brand.brandName}
+            <label>Types</label> {product.type.typeName}
 
             <label>Price</label> {product.price}
 
