@@ -26,6 +26,12 @@ namespace API.Controllers
         public async Task<ActionResult<List<Product>>> GetProducts([FromQuery] PaginationDto paginationDto)
         {
             var queryable = context.Products.Include(x => x.Brand).Include(y => y.Type).AsQueryable();
+
+            if(!string.IsNullOrEmpty(paginationDto.Name))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Trim().Contains(paginationDto.Name.ToLower().Trim()));
+            }
+
             await HttpContext.InsertParametersPaginationInHeader(queryable);
             var products = await queryable.OrderBy(x => x.Name).Paginate(paginationDto).ToListAsync();
 

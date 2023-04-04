@@ -12,5 +12,7 @@
             get { return recordsPerPage;  }
             set { recordsPerPage = (value > maxRecordsPerPage) ? maxRecordsPerPage : value;  }
         }
+
+        public string? Name { get; set; }
     }
 }
