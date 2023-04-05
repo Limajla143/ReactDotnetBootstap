@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import DisplayErrors from "./DisplayErrors";
 import Loading from "./Loading";
+import { toast } from "react-toastify";
 
 export default function EditEntity<TCreation, TRead>(props: editEntityProps<TCreation, TRead>) {
 
@@ -27,6 +28,7 @@ export default function EditEntity<TCreation, TRead>(props: editEntityProps<TCre
                 catch(error: any) {
                     if(error && error.response) {
                         setErrors(error.response.data);
+                        toast.error(error.response.data);
                     }
                 }
             }

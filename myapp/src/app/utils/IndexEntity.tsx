@@ -6,6 +6,7 @@ import customConfirm from "./customConfirm";
 import GenericList from "./GenericList";
 import Pagination from "./Pagination";
 import RecordsPerPageSelect from "./RecordsPerPageSelect";
+import { toast } from "react-toastify";
 
 export default function IndexEntity<T>(props: indexEntityProps<T>) {
 
@@ -36,7 +37,7 @@ export default function IndexEntity<T>(props: indexEntityProps<T>) {
         } 
         catch(error: any) {
             if(error && error.response) {
-                console.log(error(error.response.data));
+                toast.error(error(error.response.data));
             }
         }
     }

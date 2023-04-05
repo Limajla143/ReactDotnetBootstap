@@ -1,4 +1,4 @@
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import * as Yup from 'yup';
 import { useEffect, useState } from "react"
 import { brandDto } from "../brand/brand.model";
@@ -48,21 +48,29 @@ export default function ProductForm(props: productFormProps) {
           >
             {(formikProps) => (
                 <Form>
-                    <TextField displayName="Product Name" field="name"/>
+                    <TextField displayName="Product Name" field="name" />
                     <TextField displayName="Description" field="description"/>
                     <NumberField displayName="Price" field="price"/>
 
-                    <Field as="select" name="brandId">
-                        {brand?.map(x => (
-                             <option key={x.brandId} value={x.brandId}>{x.brandName}</option>
-                        ))}                        
-                    </Field>
+                    <div className="mb-3">
+                        <label htmlFor="Brand">Brand</label> 
+                        <Field as="select" name="brandId" className="form-control">
+                            {brand?.map(x => (
+                                <option key={x.brandId} value={x.brandId}>{x.brandName}</option>
+                            ))}                        
+                        </Field>    
+                         <ErrorMessage name="Brand"/> 
+                    </div>
 
-                    <Field as="select" name="typeId">
-                    {types?.map(x => (
-                             <option key={x.typeId} value={x.typeId}>{x.typeName}</option>
-                        ))} 
-                    </Field>
+                    <div className="mb-3">
+                        <label htmlFor="Type">Types</label> 
+                        <Field as="select" name="typeId" className="form-control">
+                            {types?.map(x => (
+                                <option key={x.typeId} value={x.typeId}>{x.typeName}</option>
+                            ))} 
+                        </Field>
+                         <ErrorMessage name="Type"/> 
+                    </div>                    
 
                     <NumberField displayName="Quantity Stock" field="quantityStock"/>
 

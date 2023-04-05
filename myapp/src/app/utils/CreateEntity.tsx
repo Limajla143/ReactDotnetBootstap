@@ -16,6 +16,7 @@ export default function CreateEntity<TCreation>(props: createEntityProps<TCreati
         catch(error: any) {
             if(error && error.response) {
                 setErrors(error.response.data);
+                setErrors(error.response.data);
             }        
         }
     }

@@ -7,7 +7,9 @@ import css from './ProductList.module.css';
 export default function ProductList(props: productListProps) {
     return (
         <>
-            <Link className="btn btn-primary" to={`/products/create`}>Create Product</Link>
+            <div className="mb-3">
+                <Link className="btn btn-primary" to={`/products/create`}>Create Product</Link>
+            </div>
 
             <GenericList list={props.products}>
             <div className={css.div}> 

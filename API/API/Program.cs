@@ -11,6 +11,7 @@ using MoviesAPI.Helpers;
 using System.Text;
 using AutoMapper;
 using API.Helpers;
+using API.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,16 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
-builder.Services.AddCors();
+builder.Services.AddCors(opt =>
+{
+    var frontendUrl = ConfigurationBinder.GetValue<string>(builder.Configuration, "frontend_url");
+    var imagesUrl = ConfigurationBinder.GetValue<string>(builder.Configuration, "images_url");
+    opt.AddPolicy("CorsApi", builder =>
+    {
+        builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
+        .WithExposedHeaders(new string[] { "totalAmountOfRecords" });
+    });
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt =>
 {
@@ -62,6 +72,9 @@ builder.Services.AddScoped<ImageService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -72,13 +85,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(opt =>
-{
-    var frontendUrl = ConfigurationBinder.GetValue<string>(builder.Configuration, "frontend_url");
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000")
-    .WithExposedHeaders(new string[] { "totalAmountOfRecords" });
-});
-
+app.UseCors("CorsApi");
 
 app.UseAuthentication();
 app.UseAuthorization();

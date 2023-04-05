@@ -7,6 +7,7 @@ import { Form, Formik } from "formik";
 import Pagination from "../../app/utils/Pagination";
 import ProductList from "./ProductList";
 import Button from "../../app/forms/Button";
+import { toast } from "react-toastify";
 
 export default function FilterProducts() {
     const initialValues: filterProductsForm = {
@@ -34,12 +35,17 @@ export default function FilterProducts() {
 
     function searchProducts(values: filterProductsForm) {
         modifyURL(values);
-        axios.get(`${urlProducts}/`, {params: values})
+        try{
+            axios.get(`${urlProducts}/`, {params: values})
             .then((response: AxiosResponse<productDto[]>) => {
                 const records = parseInt(response.headers['totalAmountOfRecords'], 10);
                 setTotalAmountOfPages(Math.ceil(records / values.recordsPerPage ));
                 setProducts(response.data);
             })
+        }
+        catch(error: any) {
+            toast.error(error);
+        }
     }
 
     useEffect(() => {

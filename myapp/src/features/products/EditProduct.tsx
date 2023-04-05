@@ -6,6 +6,7 @@ import { convertProductToFormData } from "../../app/utils/formDataUtil";
 import Loading from "../../app/utils/Loading";
 import { productCreationDto, productUpdateDto } from "./product.model";
 import ProductForm from "./ProductForm";
+import { toast } from "react-toastify";
 
 export default function EditProduct() {
     const {id}: any = useParams();
@@ -44,7 +45,7 @@ export default function EditProduct() {
             history.push(`/products/${id}`);
         } catch (error: any) {
             setErrors(error.response.data);
-            console.log(error.response);
+            toast.error(error);  
         }
     }
     

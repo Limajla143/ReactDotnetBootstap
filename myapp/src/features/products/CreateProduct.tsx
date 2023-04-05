@@ -7,6 +7,7 @@ import { convertProductToFormData } from "../../app/utils/formDataUtil";
 import Loading from "../../app/utils/Loading";
 import { productCreationDto } from "./product.model";
 import ProductForm from "./ProductForm";
+import { toast } from "react-toastify";
 
 export default function CreateProduct() {
     const [loading, setLoading] = useState(false);
@@ -26,11 +27,12 @@ export default function CreateProduct() {
                     'Content-Type': 'multipart/form-data'
                 },
             })
-            console.log(response.data);
+           
             history.push(`/products/${response.data}`);
         }
         catch (error: any) {
             setErrors(error.response.data);
+            toast.error(error.response.data);           
         }
     }
 

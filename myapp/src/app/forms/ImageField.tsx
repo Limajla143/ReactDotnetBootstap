@@ -1,5 +1,6 @@
 import { useFormikContext } from "formik";
 import { ChangeEvent, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ImageField(props: imageFieldProps) {
     const [imageBase64, setImageBase64] = useState('');
@@ -14,7 +15,7 @@ export default function ImageField(props: imageFieldProps) {
             const file = eventArgs.currentTarget.files[0];
             if(file) {
                 toBase64(file).then((base64Representation: string) => setImageBase64(base64Representation))
-                .catch(error => console.error(error));
+                .catch(error => toast.error(error));
                 values[props.field] = file;
                 setImageURL('');
             } else {
@@ -41,7 +42,7 @@ export default function ImageField(props: imageFieldProps) {
             {imageBase64 ?
                 <div> 
                     <div style={divStyle}> 
-                        <img style={imgStyle} src={imageBase64} alt="selected"/>
+                        <img style={imgStyle} src={imageBase64} id={props.field} alt="selected"/>
                     </div>
                 </div>
             : null}
@@ -49,7 +50,7 @@ export default function ImageField(props: imageFieldProps) {
                 {imageUrl ?
                 <div> 
                     <div style={divStyle}> 
-                        <img style={imgStyle} src={imageUrl} alt="selected"/>
+                        <img style={imgStyle} src={imageUrl} id={props.field} alt="selected"/>
                     </div>
                 </div>
             : null }

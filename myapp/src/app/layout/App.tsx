@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import AuthenticationContext from '../../features/auth/AuthenticationContext';
 import { claim } from '../../features/auth/auth.model';
 import { getClaims } from '../../features/auth/handleJWT';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -22,7 +23,10 @@ function App() {
   }
   
   return (
-    <BrowserRouter>
+    <>
+       <ToastContainer position='bottom-right' hideProgressBar />
+
+       <BrowserRouter>
     <AuthenticationContext.Provider value={{claims, update: setClaims}}>
     <Menu />
       <div className='container'>
@@ -43,8 +47,9 @@ function App() {
             </div>
         </footer>
     </AuthenticationContext.Provider>
-      
-    </BrowserRouter>   
+    </BrowserRouter>
+    </>
+       
   );
 }
 
