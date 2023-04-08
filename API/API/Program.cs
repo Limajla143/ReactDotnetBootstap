@@ -22,6 +22,12 @@ builder.Services.AddControllers(options =>
     options.Filters.Add(typeof(ParseBadRequest));
 }).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("isAdmin", policy => policy.RequireClaim("role", "admin"));
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddResponseCaching();

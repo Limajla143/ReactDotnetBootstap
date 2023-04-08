@@ -3,6 +3,8 @@ using API.Dtos;
 using API.Entities;
 using API.Helpers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +52,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult<Product>> CreateProduct([FromForm] ProductCreationDto productDto)
         {
             var product = mapper.Map<Product>(productDto);
@@ -75,6 +78,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult<Product>> UpdateProduct(int id, [FromForm] ProductUpdateDto productDto)
         {
             var product = await context.Products.FindAsync(id);
@@ -105,6 +109,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await context.Products.FindAsync(id);

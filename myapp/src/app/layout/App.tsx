@@ -9,6 +9,11 @@ import AuthenticationContext from '../../features/auth/AuthenticationContext';
 import { claim } from '../../features/auth/auth.model';
 import { getClaims } from '../../features/auth/handleJWT';
 import { ToastContainer } from 'react-toastify';
+import configureInterceptor from '../../features/auth/httpinterceptor';
+import configureValidations from '../utils/Validation';
+
+configureValidations();
+configureInterceptor();
 
 function App() {
 
@@ -24,19 +29,17 @@ function App() {
   
   return (
     <>
-       <ToastContainer position='bottom-right' hideProgressBar />
-
-       <BrowserRouter>
+    <ToastContainer position='bottom-right' hideProgressBar />
+    <BrowserRouter>
     <AuthenticationContext.Provider value={{claims, update: setClaims}}>
     <Menu />
       <div className='container'>
         <Switch>
           {routes.map(route => 
             <Route key={route.path} path={route.path} exact={route.exact}>
-              {/* {route.isAdmin && !isAdmin() ? <>
+              {route.isAdmin && !isAdmin() ? <>
                 You are not allowed to see this page
-              </> : <route.component /> } */}
-              <route.component />
+              </> : <route.component /> }
             </Route>
             )}
         </Switch>

@@ -61,7 +61,7 @@ export default function FilterProducts() {
     }, [])
     return (
         <>
-            <h3>Filter Movies</h3>
+            <h3>Filter Products</h3>
              <Formik initialValues={initialValues} 
              onSubmit={values => {
                 values.page = 1;

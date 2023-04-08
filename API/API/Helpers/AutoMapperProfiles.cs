@@ -1,7 +1,7 @@
 ﻿using API.Dtos;
 using API.Entities;
 using AutoMapper;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace MoviesAPI.Helpers
 {
@@ -25,6 +25,8 @@ namespace MoviesAPI.Helpers
             CreateMap<ProductDto, Product>();
             CreateMap<ProductCreationDto, Product>();
             CreateMap<ProductUpdateDto, Product>();
+
+            CreateMap<IdentityUser, UserDto>();
         }
     }
 }

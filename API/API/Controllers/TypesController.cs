@@ -3,6 +3,8 @@ using API.Dtos;
 using API.Entities;
 using API.Helpers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +47,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> Post([FromBody] TypesCreationDto typesCreationDto)
         {
             var types = mapper.Map<Types>(typesCreationDto);
@@ -54,6 +57,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> Put(int id, [FromBody] TypesCreationDto typesCreationDto)
         {
 
@@ -69,6 +73,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> Delete(int id)
         {
             var exists = await context.Types.AnyAsync(x => x.TypeId == id);

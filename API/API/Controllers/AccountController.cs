@@ -1,10 +1,15 @@
-﻿using API.Dtos;
+﻿using API.Data;
+using API.Dtos;
 using API.Entities;
+using API.Helpers;
 using API.Service;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,12 +22,42 @@ namespace API.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IConfiguration configuration;
+        private readonly StoreContext context;
+        private readonly IMapper mapper;
 
-        public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IConfiguration _configuration)
+        public AccountController(UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IConfiguration _configuration,
+             StoreContext _context, IMapper _mapper)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             configuration = _configuration;
+            context = _context;
+            mapper = _mapper;
+        }
+
+        [HttpGet("listUsers")]
+        public async Task<ActionResult<List<UserDto>>> GetListUsers([FromQuery] PaginationDto paginationDto)
+        {
+            var queryable = context.Users.AsQueryable();
+            await HttpContext.InsertParametersPaginationInHeader(queryable);
+            var users = await queryable.OrderBy(x => x.Email).Paginate(paginationDto).ToListAsync();
+            return mapper.Map<List<UserDto>>(users);
+        }
+
+        [HttpPost("makeAdmin")]
+        public async Task<ActionResult> MakeAdmin([FromBody] string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            await userManager.AddClaimAsync(user, new Claim("role", "admin"));
+            return NoContent();
+        }
+
+        [HttpPost("removeAdmin")]
+        public async Task<ActionResult> RemoveAdmin([FromBody] string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveClaimAsync(user, new Claim("role", "admin"));
+            return NoContent();
         }
 
         [HttpPost("register")]

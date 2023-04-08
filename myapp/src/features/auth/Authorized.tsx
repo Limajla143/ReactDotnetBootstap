@@ -2,11 +2,11 @@ import { ReactElement, useContext, useEffect, useState } from "react";
 import AuthenticationContext from "./AuthenticationContext";
 
 export default function Authorized(props: authorizedProps) {
-    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isAuthorized, setIsAuthorized] = useState(true);
     const {claims} = useContext(AuthenticationContext);
 
     useEffect(() => {
-        if(props.role) {
+        if(props.role === 'admin') {
             const index = claims.findIndex(claim => 
                 claim.name === 'role' && claim.value === props.role)
                 setIsAuthorized(index > -1);
