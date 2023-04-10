@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import Button from "../../app/forms/Button";
 import customConfirm from "../../app/utils/customConfirm";
 import AlertContext from "../../app/utils/AlertContext";
+import Authorized from "../auth/Authorized";
 
 export default function ProductDetails() {
     const {id} : any = useParams();
@@ -62,10 +63,15 @@ export default function ProductDetails() {
             <div style={{marginTop: '10px'}} className="mb-3">
                     <img style={{width: '450px'}} src={product.pictureUrl} id={product.pictureUrl} alt="selected"/>
             </div>
-
-            <Link style={{marginRight: '1rem'}} className="btn btn-info" to={`/products/edit/${product.productId}`}>Edit</Link>
-
-            <Button onClick={() => customConfirm(() => deleteProduct())} className="btn btn-danger" >Delete</Button>
+            <Authorized 
+                role="admin"
+                authorized={
+                    <>
+                      <Link style={{marginRight: '1rem'}} className="btn btn-info" to={`/products/edit/${product.productId}`}>Edit</Link>
+                        <Button onClick={() => customConfirm(() => deleteProduct())} className="btn btn-danger" >Delete</Button>
+                    </>    
+                }
+            />
         </div> : <Loading />
     )
 }

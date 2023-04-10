@@ -47,7 +47,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> Post([FromBody] BrandCreationDto brandCreationDto)
         {
             var Brand = mapper.Map<Brand>(brandCreationDto);
@@ -57,7 +56,6 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> Put(int id, [FromBody] BrandCreationDto brandCreationDto)
         {
 
@@ -73,7 +71,6 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> Delete(int id)
         {
             var exists = await context.Brands.AnyAsync(x => x.BrandId == id);

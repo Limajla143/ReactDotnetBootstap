@@ -23,7 +23,7 @@ function App() {
     setClaims(getClaims())
   }, [])
 
-  function isAdmin() {
+  function isAdmin() { 
     return claims.findIndex(claim => claim.name === 'role' && claim.value === 'admin') > -1;
   }
   

@@ -68,7 +68,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return BuildToken(userCredentials);
+                return await BuildToken(userCredentials);
             }
             else
             {
@@ -84,7 +84,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                return BuildToken(userCredentials);
+                return await BuildToken(userCredentials);
             }
             else
             {
@@ -92,12 +92,17 @@ namespace API.Controllers
             }
         }
 
-        private AuthenticationResponse BuildToken(UserCredentials userCredentials)
+        private async Task<AuthenticationResponse> BuildToken(UserCredentials userCredentials)
         {
             var claims = new List<Claim>()
             {
                 new Claim("email", userCredentials.Email)
             };
+
+            var user = await userManager.FindByNameAsync(userCredentials.Email);
+            var claimsDb = await userManager.GetClaimsAsync(user);
+
+            claims.AddRange(claimsDb);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWTSettings:TokenKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

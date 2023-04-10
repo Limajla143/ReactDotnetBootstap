@@ -22,23 +22,31 @@ export default function Menu() {
                             <Authorized 
                                 role="admin"
                                 authorized={
-                                    <>           
-                                    </>
-                                }
-                                />  
-                                 <li className="nav-item">
+                                    <>  
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/products">Search Products</NavLink>
+                                      </li>
+                                    <li className="nav-item">
                                         <NavLink className="nav-link" to="/types">Types</NavLink>
                                       </li>
                                       <li className="nav-item">
                                         <NavLink className="nav-link" to="/brand">Brand</NavLink>
                                       </li> 
                                       <li className="nav-item">
-                                        <NavLink className="nav-link" to="/products">Products</NavLink></li> 
-                                <li className="nav-item">
-                                <NavLink className="nav-link" to="/users">
-                                    Users
-                                </NavLink>
-                                </li>                   
+                                        <NavLink className="nav-link" to="/users">
+                                            Users
+                                        </NavLink>
+                                    </li>              
+                                    </>
+                                }
+                                noAuthorized={
+                                <>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/products">Search Products</NavLink>
+                                    </li>
+                                </>
+                                }
+                                />                 
                         </ul>
                         <div className="d-flex">
                                 <Authorized

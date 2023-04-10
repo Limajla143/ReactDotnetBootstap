@@ -23,11 +23,6 @@ builder.Services.AddControllers(options =>
 }).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("isAdmin", policy => policy.RequireClaim("role", "admin"));
-});
-
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddResponseCaching();
@@ -71,7 +66,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsAdmin", policy => policy.RequireClaim("role", "admin"));
+});
+
 
 builder.Services.AddScoped<ImageService>();
 

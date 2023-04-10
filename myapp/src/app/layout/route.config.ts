@@ -16,18 +16,18 @@ import LandingPage from "./LandingPage";
 const routes = [
     {path: '/login', component: Login},
     {path: '/register', component: Register},
-    {path: '/users', component: IndexUsers},
-    {path: '/types', component: IndexTypes, exact: true},
+    {path: '/users', component: IndexUsers, isAdmin: true},
+    {path: '/types', component: IndexTypes, exact: true, isAdmin: true},
     {path: '/types/create', component: CreateTypes, isAdmin: true},
     {path: '/types/edit/:id(\\d+)', component: EditTypes, isAdmin: true},
-    {path: '/brand', component: IndexBrand, exact: true},
+    {path: '/brand', component: IndexBrand, exact: true, isAdmin: true},
     {path: '/brand/create', component: CreateBrand, isAdmin: true},
     {path: '/brand/edit/:id(\\d+)', component: EditBrand, isAdmin: true},
     {path: '/products/create', component: CreateProduct, isAdmin: true},
     {path: '/products/edit/:id(\\d+)', component: EditProduct, isAdmin: true},
     {path: '/products/:id(\\d+)', component: ProductDetail},
-    {path: '/', component: FilterProducts}
-    //{path: '/', component: LandingPage},
+    {path: '/products', component: FilterProducts},
+    {path: '/', component: LandingPage},
 ]
 
 export default routes;

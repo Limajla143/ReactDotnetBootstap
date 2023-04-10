@@ -7,6 +7,7 @@ import { urlProducts } from "../../app/layout/endpoints";
 import axios from "axios";
 import Button from "../../app/forms/Button";
 import customConfirm from "../../app/utils/customConfirm";
+import Authorized from "../auth/Authorized";
 
 export default function IndividualProduct(product: productDto) {
     const buildLink = () => `products/${product.productId}`;
@@ -31,9 +32,9 @@ export default function IndividualProduct(product: productDto) {
             </p>
 
             <Link style={{marginRight: '1rem'}} className="btn btn-info" to={`/products/${product.productId}`}>Details</Link>
-
-
-            <Button onClick={() => customConfirm(() => deleteProduct())} className="btn btn-danger" >Delete</Button>
+            <Authorized 
+                 role="admin"
+                 authorized={ <> <Button onClick={() => customConfirm(() => deleteProduct())} className="btn btn-danger" >Delete</Button> </> } />
         </div>
     )
 }

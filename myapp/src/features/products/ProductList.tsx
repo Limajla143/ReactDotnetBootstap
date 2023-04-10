@@ -3,12 +3,16 @@ import GenericList from "../../app/utils/GenericList";
 import IndividualProduct from "./IndividualProduct";
 import { productDto } from "./product.model";
 import css from './ProductList.module.css';
+import Authorized from "../auth/Authorized";
 
 export default function ProductList(props: productListProps) {
     return (
         <>
             <div className="mb-3">
-                <Link className="btn btn-primary" to={`/products/create`}>Create Product</Link>
+            <Authorized 
+                 role="admin"
+                 authorized={ <>  <Link className="btn btn-primary" to={`/products/create`}>Create Product</Link> </> } />
+                
             </div>
 
             <GenericList list={props.products}>
@@ -17,7 +21,7 @@ export default function ProductList(props: productListProps) {
                     <IndividualProduct {...product} key={product.productId} />
                 )}
             </div>
-       </GenericList>
+            </GenericList>
         </>
       
     )

@@ -7,6 +7,7 @@ import GenericList from "./GenericList";
 import Pagination from "./Pagination";
 import RecordsPerPageSelect from "./RecordsPerPageSelect";
 import { toast } from "react-toastify";
+import Authorized from "../../features/auth/Authorized";
 
 export default function IndexEntity<T>(props: indexEntityProps<T>) {
 
@@ -62,7 +63,7 @@ export default function IndexEntity<T>(props: indexEntityProps<T>) {
 
             <GenericList list={entities}>
                 <table className="table table-striped">
-                    {props.children(entities!, buttons)}
+                {props.children(entities!, buttons)} 
                 </table>
             </GenericList>
 

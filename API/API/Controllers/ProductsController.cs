@@ -78,7 +78,6 @@ namespace API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult<Product>> UpdateProduct(int id, [FromForm] ProductUpdateDto productDto)
         {
             var product = await context.Products.FindAsync(id);
@@ -109,7 +108,6 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var product = await context.Products.FindAsync(id);
